@@ -134,6 +134,7 @@ class BinarySearchTree
     else
       parent.right = replacement
     end
+    replacement.parent = parent
     replacement.left, replacement.right = children
     rep_descendents.each { |descendent| insert(descendent.value) }
   end
