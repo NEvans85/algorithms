@@ -108,12 +108,12 @@ class BinarySearchTree
     parent = node.parent
     if parent.nil?
       @root = node.children[0]
-      @root.parent = nil
-    elsif parent.children.find_index(node).zero?
+    elsif parent.left == node
       parent.left = node.children[0]
     else
       parent.right = node.children[0]
     end
+    node.children[0].parent = parent
   end
 
   def remove_two_child_node(node)

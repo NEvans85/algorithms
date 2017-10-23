@@ -12,7 +12,7 @@ class BSTNode
   end
 
   def descendents
-    return nil if children.empty?
+    return [] if children.empty?
     result = children + children.map(&:descendents)
     result.flatten.reject(&:nil?)
   end
