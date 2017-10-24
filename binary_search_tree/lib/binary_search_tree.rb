@@ -72,6 +72,18 @@ class BinarySearchTree
     in_order_traversal(tree_node.right, arr) if tree_node.right
   end
 
+  def in_order_traversal_iter(tree_node = @root)
+    # 1. initialize an empty stack
+    # 2. init curr_node as root
+    # 3. push curr_node onto the stack
+    #    then set curr_node to Curr_node.left until curr_node == nil
+    # 4. if curr_node is nil and stack is not empty
+      # a. pop from stack
+      # b. set curr_node to popped.right
+      # c. go back to 3
+    # 5. if curr_node == nil, empty the stack
+  end
+
 
   private
   # optional helper methods go here:
