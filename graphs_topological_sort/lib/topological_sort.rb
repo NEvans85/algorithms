@@ -1,5 +1,4 @@
 require_relative 'graph'
-require 'byebug'
 
 # Implementing topological sort using both Khan's and Tarian's algorithms
 
@@ -8,20 +7,29 @@ require 'byebug'
 def topological_sort(vertices)
   visited = vertices.map { |v| [v, false] }.to_h
   result = []
-  debugger
   visited.each do |vertex, status|
-    visit(vertex, visited, result) unless status
+    begin
+      visit(vertex, visited, result) unless status
+    rescue
+      result = []
+      break
+    end
   end
   result
 end
 
-def visit(vertex, visited, result)
-  unless visited[vertex]
+def visit(vertex, visited, result, chain = [])
+  if chain.include?(vertex)
+    raise "Cycle Detected"
+  end
+  if !visited[vertex]
     children = vertex.out_edges.map(&:to_vertex)
     children.each do |child|
-      visit(child, visited, result)
+      chain << vertex
+      visit(child, visited, result, chain)
     end
     visited[vertex] = true
+    chain.delete(vertex)
     result.unshift(vertex)
   end
 end
