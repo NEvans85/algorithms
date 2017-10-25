@@ -134,8 +134,8 @@ end
 
   def neighbors(pos)
     x, y = pos
-    neighbors = [[pos[0] - 1, pos[1]], [pos[0] + 1, pos[1]],
-                 [pos[0], pos[1] + 1], [pos[0], pos[1] - 1]]
+    neighbors = [[x - 1, y], [x + 1, y],
+                 [x, y + 1], [x, y - 1]]
     neighbors.reject { |n_pos| n_pos.any? { |el| el < 0 } }
   end
 end
