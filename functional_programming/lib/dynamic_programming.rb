@@ -47,7 +47,6 @@ end
   end
 
   def frog_hops_top_down(n)
-    return @frog_hop_cache[n] if @frog_hop_cache[n]
     @frog_hop_cache[n] = frog_hops_top_down_helper(n)
     @frog_hop_cache[n]
   end
@@ -107,10 +106,20 @@ end
     @distance_cache[start_pos] = calc_distance(start_pos)
     curr_pos = start_pos
     path = [curr_pos]
-    until curr_pos == end_pos
+    visited = { curr_pos => true }
+    until curr_pos == @end_pos
       moves = neighbors(curr_pos).reject { |pos| maze[pos[0]][pos[1]] == 'X' }
-      curr_pos = moves.min_by { |pos| calc_distance(pos) }
-      path << curr_pos
+      ordered_moves = moves.sort_by { |pos| calc_distance(pos) }
+      new_moves = ordered_moves.reject { |pos| visited[pos] }
+      best_move = new_moves.empty? ? ordered_moves[0] : new_moves[0]
+      if path.include?(best_move)
+        @distance_cache[curr_pos] = 1.0 / 0
+        path.pop
+      else
+        path << best_move
+        visited[best_move] = true
+      end
+      curr_pos = best_move
     end
     path
   end
@@ -124,6 +133,7 @@ end
   end
 
   def neighbors(pos)
+    x, y = pos
     neighbors = [[pos[0] - 1, pos[1]], [pos[0] + 1, pos[1]],
                  [pos[0], pos[1] + 1], [pos[0], pos[1] - 1]]
     neighbors.reject { |n_pos| n_pos.any? { |el| el < 0 } }

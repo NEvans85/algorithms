@@ -7,6 +7,12 @@ describe 'Maze traversal' do
                  ['X', 'X', 'F', 'X']] }
   let(:maze2) { [['X', 'X', 'X', ' ', 'X', 'X', 'F', 'X'],
                  ['X', 'S', 'X', ' ', 'X', 'X', ' ', 'X'],
+                 ['X', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                 ['X', 'X', 'X', ' ', 'X', 'X', ' ', 'X'],
+                 ['X', ' ', ' ', ' ', ' ', ' ', ' ', 'X'],
+                 ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X']] }
+  let(:maze3) { [['X', 'X', 'X', ' ', 'X', 'X', 'F', 'X'],
+                 ['X', 'S', 'X', ' ', 'X', 'X', ' ', 'X'],
                  ['X', ' ', ' ', ' ', ' ', 'X', ' ', ' '],
                  ['X', 'X', 'X', ' ', 'X', 'X', ' ', 'X'],
                  ['X', ' ', ' ', ' ', ' ', ' ', ' ', 'X'],
@@ -21,5 +27,11 @@ describe 'Maze traversal' do
   it 'chooses the optimal solution among many' do
     maze_soln = [[1, 1], [2, 1], [2, 2], [2, 3], [2, 4], [2, 5], [2, 6], [1, 6], [0, 6]]
     expect(dp.maze_solver(maze2, [1, 1], [0, 6])).to eq(maze_soln)
+  end
+
+  it 'backs out of dead ends' do
+    maze_soln = [[1, 1], [2, 1], [2, 2], [2, 3], [3, 3], [4, 3], [4, 4],
+                 [4, 5], [4, 6], [3, 6], [2, 6], [1, 6], [0, 6]]
+    expect(dp.maze_solver(maze3, [1, 1], [0, 6])).to eq(maze_soln)
   end
 end
