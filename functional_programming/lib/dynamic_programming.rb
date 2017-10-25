@@ -7,7 +7,9 @@ class DynamicProgramming
     @frog_hop_cache = { 1 => [[1]],
                         2 => [[1, 1], [2]],
                         3 => [[1, 1, 1], [1, 2], [2, 1], [3]] }
-  end
+    @distance_cache = {}
+    @end_pos = []
+end
 
   def nth_odd(n)
     (n * 2) - 1
@@ -77,7 +79,6 @@ class DynamicProgramming
 
   def knapsack(weights, values, capacity)
     table = knapsack_table(weights, values, capacity)
-    debugger
     table[weights.length - 1][capacity]
   end
 
@@ -101,5 +102,30 @@ class DynamicProgramming
   end
 
   def maze_solver(maze, start_pos, end_pos)
+    @end_pos = end_pos
+    @distance_cache[end_pos] = 0
+    @distance_cache[start_pos] = calc_distance(start_pos)
+    curr_pos = start_pos
+    path = [curr_pos]
+    until curr_pos == end_pos
+      moves = neighbors(curr_pos).reject { |pos| maze[pos[0]][pos[1]] == 'X' }
+      curr_pos = moves.min_by { |pos| calc_distance(pos) }
+      path << curr_pos
+    end
+    path
+  end
+
+  def calc_distance(pos)
+    unless @distance_cache[pos]
+      @distance_cache[pos] = Math.sqrt((pos[0] - @end_pos[0])**2 +
+                                       (pos[1] - @end_pos[1])**2)
+    end
+    @distance_cache[pos]
+  end
+
+  def neighbors(pos)
+    neighbors = [[pos[0] - 1, pos[1]], [pos[0] + 1, pos[1]],
+                 [pos[0], pos[1] + 1], [pos[0], pos[1] - 1]]
+    neighbors.reject { |n_pos| n_pos.any? { |el| el < 0 } }
   end
 end
