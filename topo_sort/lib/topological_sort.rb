@@ -19,10 +19,8 @@ def topological_sort(vertices)
 end
 
 def visit(vertex, visited, result, chain = [])
-  if chain.include?(vertex)
-    raise "Cycle Detected"
-  end
-  if !visited[vertex]
+  raise "Cycle Detected" if chain.include?(vertex)
+  unless visited[vertex]
     children = vertex.out_edges.map(&:to_vertex)
     children.each do |child|
       chain << vertex

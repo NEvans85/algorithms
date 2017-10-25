@@ -33,6 +33,6 @@ class Edge
   end
 
   def inspect
-    "From #{@from_vertex.value} To #{@to_vertex.value}"
+    "From #{@from_vertex.value} To #{@to_vertex.value} \n"
   end
 end
