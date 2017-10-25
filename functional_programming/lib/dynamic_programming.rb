@@ -72,16 +72,32 @@ class DynamicProgramming
         end
       end
     end
-    cache
+    cache[n]
   end
 
   def knapsack(weights, values, capacity)
-
+    table = knapsack_table(weights, values, capacity)
+    debugger
+    table[weights.length - 1][capacity]
   end
 
   # Helper method for bottom-up implementation
   def knapsack_table(weights, values, capacity)
-
+    table = Array.new(weights.length) { Array.new(capacity + 1) {0} }
+    min_weight = weights.min
+    weights.each_with_index do |weight, row|
+      (min_weight..capacity).each do |col|
+        if weight > col && row > 0
+          table[row][col] = table[row - 1][col]
+        elsif row > 0
+          table[row][col] = [values[row] + table[row - 1][col - weight],
+                             table[row - 1][col]].max
+        elsif weight <= col
+          table[row][col] = values[row]
+        end
+      end
+    end
+    table
   end
 
   def maze_solver(maze, start_pos, end_pos)
