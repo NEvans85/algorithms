@@ -47,6 +47,9 @@ end
   end
 
   def frog_hops_top_down(n)
+    @frog_hop_cache = { 1 => [[1]],
+                        2 => [[1, 1], [2]],
+                        3 => [[1, 1, 1], [1, 2], [2, 1], [3]] }
     @frog_hop_cache[n] = frog_hops_top_down_helper(n)
     @frog_hop_cache[n]
   end
@@ -62,16 +65,10 @@ end
     cache = { 1 => [[1]] }
     (2..n).each do |i|
       cache [i] = []
-      if i <= k
-        (1...i).each do |j|
-          cache[i] += cache[i - j].map { |a| a.dup.push(j) }
-        end
-        cache[i] << [i]
-      else
-        (1..k).each do |j|
-          cache[i] += cache[i - j].map { |a| a.dup.push(j) }
-        end
+      (1..[k, i - 1].min).each do |j|
+        cache[i] += cache[i - j].map { |a| a.dup.push(j) }
       end
+      cache[i] << [i] if i <= k
     end
     cache[n]
   end
