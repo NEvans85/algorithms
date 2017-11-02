@@ -18,7 +18,7 @@ def median_two(arr1, arr2)
   when 0
     median1
   when -1
-    median_two(arr1[(arr1.length / 2) - 1...arr1.length], arr2[0..(arr2.length / 2) + 1])
+    median_two(arr1[(arr1.length / 2) - 1..-1], arr2[0..(arr2.length / 2) + 1])
   when 1
     median_two(arr1[0..(arr1.length / 2) + 1], arr2[(arr2.length / 2) - 1...arr2.length])
   end
