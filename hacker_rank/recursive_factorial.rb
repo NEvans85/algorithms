@@ -3,8 +3,8 @@
 # code
 
 def factorial(n)
-    return 1 if n == 1 || n == 0
-    return n * factorial(n - 1)
+  return 1 if [0, 1].include?(n)
+  n * factorial(n - 1)
 end
 
 n = gets.strip.to_i
