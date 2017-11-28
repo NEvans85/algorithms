@@ -1,4 +1,4 @@
-# prompt: 
+# prompt: https://www.hackerrank.com/challenges/sparse-arrays/problem
 
 n = int(input())
 countDict = {}
