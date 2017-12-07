@@ -26,20 +26,37 @@ def nodesAtNHeight(root, h):
         height += 1
     return results
 
-# recursive in order traversial causes stack overflow in "tall" trees
-def inOrder(root):
-    results = visit(root)
-    print(" ".join([str(x) for x in results]))
+# This recursive inOrder causes stack overflow in "tall" trees
+# def inOrder(root):
+#     results = visit(root)
+#     print(" ".join([str(x) for x in results]))
+#
+# def visit(root):
+#     values = []
+#     if root.left:
+#         values += visit(root.left)
+#     if root.data != -1:
+#         values.append(root.data)
+#     if root.right:
+#         values += visit(root.right)
+#     return values
 
-def visit(root):
-    values = []
-    if root.left:
-        values += visit(root.left)
-    if root.data != -1:
-        values.append(root.data)
-    if root.right:
-        values += visit(root.right)
-    return values
+# This version of inOrder uses a stack data structure rather than
+# recursion to avoid stack overflow error
+def inOrder(root):
+    stack = [root]
+    trav = []
+    while len(stack) > 0:
+        node = stack.pop()
+        if node.left.data != -1 and node.left not in trav:
+            stack.append(node)
+            stack.append(node.left)
+        else:
+            trav.append(node)
+            if node.right.data != -1:
+                stack.append(node.right)
+    result = [str(n.data) for n in trav]
+    print (" ".join(result))
 
 n = int(input())
 root = Node(1)
