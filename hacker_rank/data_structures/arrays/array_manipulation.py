@@ -1,6 +1,7 @@
 
 
 # Naive implementation. Runs in O(n^2)
+# Stores the actual values at each index
 import sys
 
 if __name__ == "__main__":
@@ -13,7 +14,7 @@ if __name__ == "__main__":
         for idx in range(a, b):
             resultList[idx] += k
     print (max(resultList))
-    
+
 # Optimized impleentation. Runs in O(n)
 # Uses a differential array rather than storing the actual values.
 # Each value in this diff-array represents the difference between one element and the previous
