@@ -1,4 +1,4 @@
-
+# prompt: https://www.hackerrank.com/challenges/the-love-letter-mystery/problem
 """
 This algorithm determines how many times a character must be reduced
 (changed to the previous letter) in order to make the input string into
