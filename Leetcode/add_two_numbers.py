@@ -6,6 +6,42 @@
 #         self.val = x
 #         self.next = None
 
+# This is my third attempt at the algorithm. I believe this is near the
+# optimized version of the algorithm. It runs through both lists
+# concurrently substituting 0 for values when one list is longer than the other.
+
+class Solution:
+    def addTwoNumbers(self, l1, l2):
+        """
+        :type l1: ListNode
+        :type l2: ListNode
+        :rtype: ListNode
+        """
+        dummyNode = ListNode(0)
+        currNode1 = l1
+        currNode2 = l2
+        currNodeR = dummyNode
+        carry = 0
+        while currNode1 != None or currNode2 != None:
+            if currNode1:
+                val1 = currNode1.val
+                currNode1 = currNode1.next
+            else:
+                val1 = 0
+            if currNode2:
+                val2 = currNode2.val
+                currNode2 = currNode2.next
+            else:
+                val2 = 0
+            dSum = val1 + val2 + carry
+            carry = dSum // 10
+            dSum %= 10
+            currNodeR.next = ListNode(dSum)
+            currNodeR = currNodeR.next
+        if carry > 0:
+            currNodeR.next = ListNode(carry)
+        return dummyNode.next
+
 # THis is my first try at the solution. It is long and repeats code in
 # several places. I believe that it can be made much more efficient.
 class Solution:
