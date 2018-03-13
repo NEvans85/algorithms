@@ -51,16 +51,14 @@ def graphDistances(g, s):
     visited = [False for _ in g]
     currNode = s
     visited[currNode] = True
+    nodeQ = []
     while any(not v for v in visited):
         neighbors = [idx for idx, w in enumerate(g[currNode]) if w > -1 and not visited[idx]]
-        nextNode = None
-        shortestLeg = float('inf')
         for nIdx in neighbors:
             legDist = g[currNode][nIdx]
             dist[nIdx] = min(dist[nIdx], dist[currNode] + legDist)
-            if legDist < shortestLeg:
-                nextNode = nIdx
-                shortestLeg = legDist
-        currNode = nextNode
+        sNeighbors = sorted(neighbors, key=lambda x: dist[x])
+        nodeQ = sNeighbors + nodeQ
+        currNode = nodeQ.pop(0)
         visited[currNode] = True
     return dist
