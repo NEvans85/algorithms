@@ -32,9 +32,11 @@ All possible combinations that add up to a given sum, or "Empty" if there are no
 """
 
 def combinationSum(a, target):
+    # The conversion from list to set to list creates a list of unique elements.
     sortedA = sorted(list(set(a)))
     combinations = []
 
+    
     def check(nums, partial):
         pSum = sum(partial)
         for idx, num in enumerate(nums):
