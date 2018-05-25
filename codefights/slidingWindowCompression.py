@@ -59,8 +59,32 @@ Guaranteed constraints:
 
 Compressed inputString.
 """
+# The following algorithm is my second attempt at this problem, several months later. Passes all tests.
+def losslessDataCompression(iString, width):
+    cString = ''
+    i = 0
+    while i < len(iString):
+        windowStart = max(0, i - width)
+        bestLength = 0
+        bestStart = windowStart
+        length = 0
+        for j in range(windowStart, i):
+            while i + length < len(iString) and j+length < i and iString[j+length] == iString[i+length]:
+                length += 1
+            if bestLength < length:
+                bestLength = length
+                bestStart = j
+        if bestLength == 0:
+            cString += iString[i]
+            i += 1
+        else:
+            cString += '({},{})'.format(bestStart, bestLength)
+            i += bestLength
+    return cString
+
 
 # The following algorithm passes some but not all tests. Need to explore where its weaknesses lie.
+"""
 def losslessDataCompression(inputString, width):
     cString = ""
     i = 0
@@ -84,3 +108,4 @@ def losslessDataCompression(inputString, width):
             cString += inputString[i]
             i += 1
     return cString
+"""
